@@ -10,14 +10,14 @@
 #include <stdbool.h>
 
 typedef struct{
-    char words[26][50];
-    int ocurrences[26];
+    char *word;
+    int *ocurrences;
 }Ocurrence; //a word, prefix or sufix and the positions of your ocurrences
 
 typedef struct node{
-    struct node *children[26];
+    struct node **children;
     Ocurrence ocurrence;
-    bool isWordEnd;
+    int isWordEnd;
 }Node;
 
 typedef struct{
@@ -27,6 +27,7 @@ typedef struct{
 void Insert(CompressedTrieTree *tree, Ocurrence ocurrence);
 void Initialize(CompressedTrieTree *tree);
 int isEmpty(CompressedTrieTree tree);
+Node* CreateRoot();
 Node* NewNode(Ocurrence ocurrence);
 void FreeMemory(Node *node);
 
