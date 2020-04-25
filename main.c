@@ -1,4 +1,4 @@
-/* 
+/*
     Compressed Trie Tree
     GitHub - https://github.com/carlasanches/CompressedTrieTree
     Author - Carla Sanches
@@ -11,32 +11,49 @@
 int main(){
 
     CompressedTrieTree tree;
-    Ocurrence ocurrence;
+    Ocurrence ocurrence, ocurrence2;
 
     ocurrence.ocurrences = (int*) malloc(sizeof(int));
     ocurrence.word = (char*) malloc(5 * sizeof(char));
 
-    char palavra[4];    
+    ocurrence2.ocurrences = (int*) malloc(sizeof(int));
+    ocurrence2.word = (char*) malloc(5 * sizeof(char));
+
+    char palavra[4];
 
     int i;
-    for(i = 0; i <= 4; i++){
+    for(i = 0; i < 4; i++){
         palavra[i] = 'a';
-    } 
+    }
 
     ocurrence.ocurrences[0] = 1;
-    
-    for(i = 0; i <= 4; i++){
+
+    for(i = 0; i < 4; i++){
         ocurrence.word[i] = palavra[i];
     }
 
-    Initialize(&tree); /* ponteiro do parÃ¢metro recebe o endereÃ§o de memÃ³ria da variÃ¡vel tree. 
-                          Assim, ele consegue alterar os valores de tree na funÃ§Ã£o Initialize */
+    Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
+                          Assim, ele consegue alterar os valores de tree na função Initialize */
 
     Insert(&tree, ocurrence);
-      
-    FreeMemory(tree.root);   
+
+    for(i = 0; i < 4; i++){
+        palavra[i] = 'b';
+    }
+
+    ocurrence2.ocurrences[0] = 1;
+
+    for(i = 0; i < 4; i++){
+        ocurrence2.word[i] = palavra[i];
+    }
+
+    Insert(&tree, ocurrence2);
+
+    FreeMemory(tree.root);
     free(ocurrence.ocurrences);
-    free(ocurrence.word); //nÃ£o Ã© assim que dÃ¡ free em vetor
+    free(ocurrence.word); //não funciona
+    free(ocurrence2.ocurrences);
+    free(ocurrence2.word); //não funciona
 
     return 0;
 }

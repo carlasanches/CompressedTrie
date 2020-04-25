@@ -1,9 +1,3 @@
-/* 
-    Compressed Trie Tree
-    GitHub - https://github.com/carlasanches/CompressedTrieTree
-    Author - Carla Sanches
-*/
-
 #ifndef COMPRESSEDTRIETREE_H_INCLUDED
 #define COMPRESSEDTRIETREE_H_INCLUDED
 
@@ -30,6 +24,5 @@ int isEmpty(CompressedTrieTree tree);
 Node* CreateRoot();
 Node* NewNode(Ocurrence ocurrence);
 void FreeMemory(Node *node);
-
 
 #endif // COMPRESSEDTRIETREE_H_INCLUDED
