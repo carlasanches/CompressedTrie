@@ -21,8 +21,8 @@ typedef struct{
 void Insert(CompressedTrieTree *tree, Ocurrence ocurrence);
 void Initialize(CompressedTrieTree *tree);
 int isEmpty(CompressedTrieTree tree);
-Node* CreateRoot();
-Node* NewNode(Ocurrence ocurrence);
+Node* CreateNode();
+void RefreshNode(Node *node, Ocurrence ocurrence);
 void FreeMemory(Node *node);
 
 #endif // COMPRESSEDTRIETREE_H_INCLUDED
