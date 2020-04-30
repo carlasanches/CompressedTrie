@@ -30,6 +30,7 @@ int main(){
     }
 
     ocurrence.ocurrences[0] = 1;
+    ocurrence.length = 4;
 
     for(i = 0; i < 4; i++){
         ocurrence.word[i] = palavra[i];
@@ -45,6 +46,7 @@ int main(){
     }
 
     ocurrence2.ocurrences[0] = 1;
+    ocurrence2.length = 4;
 
     for(i = 0; i < 4; i++){
         ocurrence2.word[i] = palavra[i];
@@ -61,6 +63,7 @@ int main(){
     }
 
     ocurrence3.ocurrences[0] = 1;
+    ocurrence3.length = 4;
 
     for(i = 0; i < 4; i++){
         ocurrence3.word[i] = palavra[i];

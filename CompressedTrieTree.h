@@ -5,6 +5,7 @@
 
 typedef struct{
     char *word;
+    int length;
     int *ocurrences;
 }Ocurrence; //a word, prefix or sufix and the positions of your ocurrences
 
@@ -21,7 +22,7 @@ typedef struct{
 void Insert(CompressedTrieTree *tree, Ocurrence ocurrence);
 void Initialize(CompressedTrieTree *tree);
 int isEmpty(CompressedTrieTree tree);
-Node* CreateNode();
+Node* CreateRoot();
 void RefreshNode(Node *node, Ocurrence ocurrence);
 void FreeMemory(Node *node);
 
