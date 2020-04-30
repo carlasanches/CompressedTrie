@@ -7,8 +7,12 @@
 #include "CompressedTrieTree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int main(){
+
+    clock_t t;
+    t = clock();
 
     CompressedTrieTree tree;
     Ocurrence ocurrence, ocurrence2, ocurrence3;
@@ -78,6 +82,9 @@ int main(){
     free(ocurrence2.word);
     free(ocurrence3.ocurrences);
     free(ocurrence3.word);
+
+    t = clock() - t;
+    printf("%lf ms", (double) t);
 
     return 0;
 }
