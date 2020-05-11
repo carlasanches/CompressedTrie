@@ -14,6 +14,8 @@ int main(){
     clock_t t;
     t = clock();
 
+    FILE *pointer_txt;
+
     CompressedTrieTree tree;
     Ocurrence ocurrence, ocurrence2, ocurrence3;
 
@@ -58,13 +60,13 @@ int main(){
 
     Insert(&tree, ocurrence2);
 
-    for(i = 0; i < 2; i++){
-        palavra[i] = 'b';
+    for(i = 2; i < 4; i++){
+        palavra[i] = '\0';
     }
 
-    for(i = 2; i < 4; i++){
-        palavra[i] = 'a';
-    }
+   // for(i = 2; i < 4; i++){
+   //     palavra[i] = 'a';
+   // }
 
     ocurrence3.ocurrences[0] = 1;
     ocurrence3.length = 4;

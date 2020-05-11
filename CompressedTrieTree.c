@@ -77,14 +77,13 @@ Node* CreateNode(Ocurrence ocurrence){
             int j = 0;
 
             char prefix[4];
+            char sufix[4];
+            char sufix2[4];
 
             while(ocurrence.word[i] == tree->root->children[index]->ocurrence.word[i]){
                prefix[i] = ocurrence.word[i];
                i++;
             }
-
-            char sufix[4];
-            char sufix2[4];
 
             int k = i;
 
