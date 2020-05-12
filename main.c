@@ -15,8 +15,22 @@ int main(){
     t = clock();
 
     FILE *pointer_txt;
+    char text[20];
 
-    CompressedTrieTree tree;
+    pointer_txt = fopen("test.txt","r");
+
+    if(pointer_txt == NULL){
+        printf("Error");
+        return 1;
+    }
+
+    while(fgets(text,20,pointer_txt) != NULL){
+        printf("%s", text);
+    }
+
+    fclose(pointer_txt);
+
+    /*CompressedTrieTree tree;
     Ocurrence ocurrence, ocurrence2, ocurrence3;
 
     ocurrence.ocurrences = (int*) malloc(sizeof(int));
@@ -45,7 +59,7 @@ int main(){
     Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
                           Assim, ele consegue alterar os valores de tree na função Initialize */
 
-    Insert(&tree, ocurrence);
+    /*Insert(&tree, ocurrence);
 
     for(i = 0; i < 4; i++){
         palavra[i] = 'b';
@@ -83,7 +97,7 @@ int main(){
     free(ocurrence2.ocurrences);
     free(ocurrence2.word);
     free(ocurrence3.ocurrences);
-    free(ocurrence3.word);
+    free(ocurrence3.word);*/
 
     t = clock() - t;
     printf("%lf ms", (double) t);
