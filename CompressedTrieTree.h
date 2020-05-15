@@ -23,7 +23,8 @@ void Insert(CompressedTrieTree *tree, Ocurrence ocurrence);
 void Initialize(CompressedTrieTree *tree);
 int isEmpty(CompressedTrieTree tree);
 Node* CreateRoot();
-void RefreshNode(Node *node, Ocurrence ocurrence);
+Node* CreateNode(Ocurrence ocurrence);
+void CreateOcurrence(Ocurrence *ocurrence, char *word);
 void FreeMemory(Node *node);
 
 #endif // COMPRESSEDTRIETREE_H_INCLUDED

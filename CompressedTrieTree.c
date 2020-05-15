@@ -38,6 +38,21 @@ Node* CreateRoot(){
     return node;
 }
 
+void CreateOcurrence(Ocurrence *ocurrence, char *word){
+
+    ocurrence->ocurrences = (int*) malloc(sizeof(int));
+    ocurrence->word = (char*) malloc(sizeof(char));
+
+    ocurrence->length = 5;
+    ocurrence->ocurrences[0] = 1;
+
+    int x;
+
+    for(x = 0; x < 5; x++){
+        ocurrence->word[x] = word[x];
+    }
+}
+
 Node* CreateNode(Ocurrence ocurrence){
 
     Node *node = malloc(sizeof(Node));
@@ -76,9 +91,17 @@ Node* CreateNode(Ocurrence ocurrence){
             int i = 0;
             int j = 0;
 
-            char prefix[4];
-            char sufix[4];
-            char sufix2[4];
+            char prefix[3];
+            char sufix[3];
+            char sufix2[3];
+
+            int x;
+
+            for(x = 0; x < 3; x++){
+                prefix[x] = '\0';
+                sufix[x] = '\0';
+                sufix2[x] = '\0';
+            }
 
             while(ocurrence.word[i] == tree->root->children[index]->ocurrence.word[i]){
                prefix[i] = ocurrence.word[i];

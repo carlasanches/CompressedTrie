@@ -15,17 +15,21 @@ int main(){
     t = clock();
 
     FILE *pointer_txt;
-
-    char word[5];
+    char c;
+    char alphabet[52] = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
 
     CompressedTrieTree tree;
-    Ocurrence ocurrence;
+    Ocurrence *ocurrence;
+    char word[5];
 
-    ocurrence.ocurrences = (int*) malloc(sizeof(int));
-    ocurrence.word = (char*) malloc(5 * sizeof(char));
+    int y;
 
-    ocurrence.ocurrences[0] = 1;
-    ocurrence.length = 4;
+    for(y = 0; y < 5; y++){
+        word[y] = '\0';
+    }
+
+    Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
+                          Assim, ele consegue alterar os valores de tree na função Initialize */
 
     pointer_txt = fopen("test.txt","r");
 
@@ -34,26 +38,48 @@ int main(){
         return 1;
     }
 
-    while(fgets(word,20,pointer_txt) != NULL){
-        printf("%s", word);
+    c = getc(pointer_txt);
 
-        int i;
+    int k = 0;
 
-        for(i = 0; i < 4; i++){
-            ocurrence.word[i] = word[i];
+    ocurrence = malloc(sizeof(Ocurrence));
+
+    while(c != EOF){
+
+        int j = 0;
+
+        while(c != ' ' && c != EOF){
+
+            int i;
+
+            for(i = 0; i < 52; i++){
+                if(c == alphabet[i]){
+
+                    word[j] = c;
+                    break;
+                }
+            }
+
+            j++;
+            c = getc(pointer_txt);
         }
+
+        CreateOcurrence(&ocurrence[k], word);
+
+        Insert(&tree, ocurrence[k]);
+        k++;
+
+        c = getc(pointer_txt);
     }
+
+    printf("%s\n", tree.root->children[0]->ocurrence.word);
+    printf("%s\n", tree.root->children[0]->children[0]->ocurrence.word);
+    printf("%s\n", tree.root->children[0]->children[1]->ocurrence.word);
+    printf("%s\n", tree.root->children[1]->ocurrence.word);
 
     fclose(pointer_txt);
 
-    Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
-                          Assim, ele consegue alterar os valores de tree na função Initialize */
-
-    Insert(&tree, ocurrence);
-
     FreeMemory(tree.root);
-    free(ocurrence.ocurrences);
-    free(ocurrence.word);
 
     t = clock() - t;
     printf("%lf ms", (double) t);
