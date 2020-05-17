@@ -38,13 +38,14 @@ Node* CreateRoot(){
     return node;
 }
 
-void CreateOcurrence(Ocurrence *ocurrence, char *word){
+void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position){
 
     ocurrence->ocurrences = (int*) malloc(sizeof(int));
     ocurrence->word = (char*) malloc(sizeof(char));
 
-    ocurrence->length = 5;
-    ocurrence->ocurrences[0] = 1;
+    ocurrence->length = length;
+    ocurrence->ocurrences_length = 1;
+    ocurrence->ocurrences[ocurrence->ocurrences_length-1] = position;
 
     int x;
 
@@ -53,13 +54,13 @@ void CreateOcurrence(Ocurrence *ocurrence, char *word){
     }
 }
 
-Node* CreateNode(Ocurrence ocurrence){
+Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
 
     Node *node = malloc(sizeof(Node));
 
     node->children = malloc(26 * sizeof(Node*));
     node->ocurrence = ocurrence;
-    node->isWordEnd = 1;
+    node->isWordEnd = isWordEnd;
 
     int i;
 
@@ -79,14 +80,19 @@ Node* CreateNode(Ocurrence ocurrence){
 
     if(isEmpty(*tree)){
 
+        int isWordEnd = 1;
+
         tree->root = CreateRoot();
-        tree->root->children[index] = CreateNode(ocurrence);
+        tree->root->children[index] = CreateNode(ocurrence, isWordEnd);
     }
     else{
         if(tree->root->children[index] == NULL){
-            tree->root->children[index] = CreateNode(ocurrence);
+            int isWordEnd = 1;
+            tree->root->children[index] = CreateNode(ocurrence, isWordEnd);
         }
         else{
+
+            int isWordEnd = 1;
 
             int i = 0;
             int j = 0;
@@ -128,13 +134,14 @@ Node* CreateNode(Ocurrence ocurrence){
             int children2_index = sufix2[0] - 'a';
 
             tree->root->children[index]->ocurrence.word = prefix;
+            tree->root->children[index]->isWordEnd = 0;
             ocurrence.word = sufix;
 
             Ocurrence *ocurrence2 = malloc(sizeof(Ocurrence));
             ocurrence2->word = sufix2;
 
-            tree->root->children[index]->children[children_index] = CreateNode(ocurrence);
-            tree->root->children[index]->children[children2_index] = CreateNode(*ocurrence2);
+            tree->root->children[index]->children[children_index] = CreateNode(ocurrence, isWordEnd);
+            tree->root->children[index]->children[children2_index] = CreateNode(*ocurrence2, isWordEnd);
         }
     }
  }

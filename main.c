@@ -43,14 +43,14 @@ int main(){
     int k = 0;
 
     ocurrence = malloc(sizeof(Ocurrence));
+    int position = 0;
 
     while(c != EOF){
 
         int j = 0;
+        int i;
 
         while(c != ' ' && c != EOF){
-
-            int i;
 
             for(i = 0; i < 52; i++){
                 if(c == alphabet[i]){
@@ -62,14 +62,16 @@ int main(){
 
             j++;
             c = getc(pointer_txt);
+            position++;
         }
 
-        CreateOcurrence(&ocurrence[k], word);
+        CreateOcurrence(&ocurrence[k], word, i,position);
 
         Insert(&tree, ocurrence[k]);
         k++;
 
         c = getc(pointer_txt);
+        position++;
     }
 
     printf("%s\n", tree.root->children[0]->ocurrence.word);
