@@ -71,7 +71,7 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
     return node;
 }
 
- void Insert(CompressedTrieTree *tree, Ocurrence ocurrence){
+ void Insert(CompressedTrieTree *tree, Ocurrence ocurrence, char *prefix, char *sufix, char *sufix2){
 
     int index = ocurrence.word[0] - 'a';    /*Calcula a posição correta para inserir a palavra baseado no valor do
                                                 caracter 'a' na tabela ASCII*/
@@ -96,18 +96,6 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
 
             int i = 0;
             int j = 0;
-
-            char prefix[3];
-            char sufix[3];
-            char sufix2[3];
-
-            int x;
-
-            for(x = 0; x < 3; x++){
-                prefix[x] = '\0';
-                sufix[x] = '\0';
-                sufix2[x] = '\0';
-            }
 
             while(ocurrence.word[i] == tree->root->children[index]->ocurrence.word[i]){
                prefix[i] = ocurrence.word[i];

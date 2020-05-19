@@ -22,6 +22,18 @@ int main(){
     Ocurrence *ocurrence;
     char word[5];
 
+    char prefix[3];
+    char sufix[3];
+    char sufix2[3];
+
+    int x;
+
+    for(x = 0; x < 3; x++){
+        prefix[x] = '\0';
+        sufix[x] = '\0';
+        sufix2[x] = '\0';
+    }
+
     int y;
 
     for(y = 0; y < 5; y++){
@@ -67,7 +79,7 @@ int main(){
 
         CreateOcurrence(&ocurrence[k], word, i,position);
 
-        Insert(&tree, ocurrence[k]);
+        Insert(&tree, ocurrence[k], prefix, sufix, sufix2);
         k++;
 
         c = getc(pointer_txt);

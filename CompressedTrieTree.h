@@ -20,7 +20,7 @@ typedef struct{
     Node *root;
 }CompressedTrieTree;
 
-void Insert(CompressedTrieTree *tree, Ocurrence ocurrence);
+void Insert(CompressedTrieTree *tree, Ocurrence ocurrence, char *prefix, char *sufix, char *sufix2);
 void Initialize(CompressedTrieTree *tree);
 int isEmpty(CompressedTrieTree tree);
 Node* CreateRoot();
