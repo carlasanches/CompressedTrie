@@ -69,23 +69,25 @@ int main(){
                 if(c == alphabet[i]){
 
                     word[j] = c;
+                    j++;
                     break;
                 }
             }
 
-            j++;
             c = tolower(getc(pointer_txt));
             position++;
         }
 
-        CreateOcurrence(&ocurrence[k], word, i,position);
-        printf("%s\n", word);
+        if(word[0] != '\0'){
+            CreateOcurrence(&ocurrence[k], word, i,position);
+            printf("%s\n", word);
 
-        Insert(&tree, ocurrence[k], prefix, sufix, sufix2);
-        k++;
+            Insert(&tree, ocurrence[k], prefix, sufix, sufix2);
+            k++;
 
-        for(y = 0; y < 50; y++){
-            word[y] = '\0';
+            for(y = 0; y < 50; y++){
+                word[y] = '\0';
+            }
         }
 
         for(x = 0; x < 30; x++){
