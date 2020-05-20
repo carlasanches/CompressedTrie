@@ -17,7 +17,7 @@ int main(){
 
     FILE *pointer_txt;
     char c;
-    char alphabet[52] = "abcdefghijklmnopqrstuvwxyz";
+    char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
 
     CompressedTrieTree tree;
     Ocurrence *ocurrence;
@@ -63,7 +63,7 @@ int main(){
         int j = 0;
         int i;
 
-        while(c != ' ' && c != EOF){
+        while(c != ' ' && c != EOF && c != '\n'){
 
             for(i = 0; i < 26; i++){
                 if(c == alphabet[i]){
@@ -86,6 +86,12 @@ int main(){
 
         for(y = 0; y < 50; y++){
             word[y] = '\0';
+        }
+
+        for(x = 0; x < 30; x++){
+            prefix[x] = '\0';
+            sufix[x] = '\0';
+            sufix2[x] = '\0';
         }
 
         c = tolower(getc(pointer_txt));

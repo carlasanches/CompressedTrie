@@ -1,8 +1,6 @@
 #ifndef COMPRESSEDTRIETREE_H_INCLUDED
 #define COMPRESSEDTRIETREE_H_INCLUDED
 
-#include <stdbool.h>
-
 typedef struct{
     char *word;
     int length;
