@@ -5,7 +5,6 @@ typedef struct{
     char *word;
     int length;
     int *ocurrences;
-    int ocurrences_length;
 }Ocurrence; //a word, prefix or sufix and the positions of your ocurrences
 
 typedef struct node{

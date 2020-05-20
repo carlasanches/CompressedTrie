@@ -25,8 +25,8 @@ Node* CreateRoot(){
     Node *node = malloc(sizeof(Node));
 
     node->children = malloc(26 * sizeof(Node*));
-    node->ocurrence.ocurrences = NULL;
     node->ocurrence.word = NULL;
+    node->ocurrence.ocurrences = NULL;
     node->isWordEnd = 0;
 
     int i;
@@ -40,16 +40,16 @@ Node* CreateRoot(){
 
 void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position){
 
+    length++; //aumento o tamanho da palavra para que ela receba o primeiro \0 de word
     ocurrence->ocurrences = (int*) malloc(sizeof(int));
-    ocurrence->word = (char*) malloc(sizeof(char));
-
+    ocurrence->word = (char*) malloc(length * sizeof(char));
     ocurrence->length = length;
-    ocurrence->ocurrences_length = 1;
-    ocurrence->ocurrences[ocurrence->ocurrences_length-1] = position;
+
+    ocurrence->ocurrences[0] = position;
 
     int x;
 
-    for(x = 0; x < 50; x++){
+    for(x = 0; x < length; x++){
         ocurrence->word[x] = word[x];
     }
 }
@@ -59,7 +59,12 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
     Node *node = malloc(sizeof(Node));
 
     node->children = malloc(26 * sizeof(Node*));
-    node->ocurrence = ocurrence;
+    node->ocurrence.word = (char*) malloc(ocurrence.length * sizeof(char));
+    node->ocurrence.ocurrences = (int*) malloc(sizeof(int));
+
+    *node->ocurrence.word = ocurrence.word;
+    *node->ocurrence.ocurrences = ocurrence.ocurrences;
+    node->ocurrence.length = ocurrence.length;
     node->isWordEnd = isWordEnd;
 
     int i;
@@ -113,10 +118,12 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
                 }
 
                 int children2_index = sufix2[0] - 'a';
-                Ocurrence *ocurrence2 = malloc(sizeof(Ocurrence));
-                ocurrence2->word = sufix2;
+                printf("%d\n", children2_index);
 
-                tree->root->children[index]->children[children2_index] = CreateNode(*ocurrence2, isWordEnd);
+                Ocurrence ocurrence2;
+
+                CreateOcurrence(&ocurrence2, sufix2, 1, 1);
+                tree->root->children[index]->children[children2_index] = CreateNode(ocurrence2, isWordEnd);
             }
 
             j = 0;
@@ -129,10 +136,11 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
                 }
 
                 int children_index = sufix[0] - 'a';
+                printf("%d\n", children_index);
 
                 tree->root->children[index]->ocurrence.word = prefix;
                 tree->root->children[index]->isWordEnd = 0;
-                ocurrence.word = sufix;
+                *ocurrence.word = sufix;
 
                 tree->root->children[index]->children[children_index] = CreateNode(ocurrence, isWordEnd);
             }

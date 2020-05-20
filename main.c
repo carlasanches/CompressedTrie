@@ -20,7 +20,7 @@ int main(){
     char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
 
     CompressedTrieTree tree;
-    Ocurrence *ocurrence;
+    Ocurrence ocurrence;
     char word[50];
 
     char prefix[30];
@@ -44,7 +44,7 @@ int main(){
     Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
                           Assim, ele consegue alterar os valores de tree na função Initialize */
 
-    pointer_txt = fopen("baskervilles.txt","r");
+    pointer_txt = fopen("test.txt","r");
 
     if(pointer_txt == NULL){
         printf("Error");
@@ -55,7 +55,6 @@ int main(){
 
     int k = 0;
 
-    ocurrence = malloc(sizeof(Ocurrence));
     int position = 0;
 
     while(c != EOF){
@@ -75,14 +74,14 @@ int main(){
             }
 
             c = tolower(getc(pointer_txt));
-            position++;
         }
 
         if(word[0] != '\0'){
-            CreateOcurrence(&ocurrence[k], word, i,position);
+            position = ftell(pointer_txt) - j;
+            CreateOcurrence(&ocurrence, word, i,position);
             printf("%s\n", word);
 
-            Insert(&tree, ocurrence[k], prefix, sufix, sufix2);
+            Insert(&tree, ocurrence, prefix, sufix, sufix2);
             k++;
 
             for(y = 0; y < 50; y++){
@@ -99,6 +98,8 @@ int main(){
         c = tolower(getc(pointer_txt));
         position++;
     }
+
+    printf("%s", tree.root->children[19]->ocurrence.word);
 
     fclose(pointer_txt);
 
