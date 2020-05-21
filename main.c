@@ -44,7 +44,7 @@ int main(){
     Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
                           Assim, ele consegue alterar os valores de tree na função Initialize */
 
-    pointer_txt = fopen("test.txt","r");
+    pointer_txt = fopen("baskervilles.txt","r");
 
     if(pointer_txt == NULL){
         printf("Error");
@@ -78,7 +78,7 @@ int main(){
 
         if(word[0] != '\0'){
             position = ftell(pointer_txt) - j;
-            CreateOcurrence(&ocurrence, word, i,position);
+            CreateOcurrence(&ocurrence, word, j,position);
             printf("%s\n", word);
 
             Insert(&tree, ocurrence, prefix, sufix, sufix2);
@@ -99,14 +99,12 @@ int main(){
         position++;
     }
 
-    printf("%s", tree.root->children[19]->ocurrence.word);
-
     fclose(pointer_txt);
 
     FreeMemory(tree.root);
 
     t = clock() - t;
-    printf("%lf ms", (double) t);
+    printf("TEMPO: %lf ms", (double) t);
 
     return 0;
 }
