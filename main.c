@@ -99,6 +99,36 @@ int main(){
         position++;
     }
 
+    int param; //para teste: 0 = interactive / 1 = exp
+    fflush(stdin);
+    scanf("%d", &param);
+
+    char prefixo[10];
+
+    for(y = 0; y < 10; y++){
+        prefixo[y] = '\0';
+    }
+
+    if(param == 0){
+
+        printf("entre com o prefixo ou digite 0 para sair: ");
+        fflush(stdin);
+        scanf("%c", &prefixo[0]);
+
+        int index = prefixo[0] - 'a';
+
+        if(prefixo[0] != '0'){
+
+            Node *node;
+            node = malloc(sizeof(Node));
+
+            printf("sugestões: ");
+            node = Search(tree.root->children[index], prefixo[0]);
+
+            Print(node->ocurrence);
+        }
+    }
+
     fclose(pointer_txt);
 
     FreeMemory(tree.root);

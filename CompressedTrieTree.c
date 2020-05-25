@@ -176,6 +176,17 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
     }
  }
 
+void Print(Ocurrence ocurrence){
+    printf("%s\n", ocurrence.word);
+}
+
+Node* Search(Node *node, char prefix){
+
+    if(node == NULL || node->ocurrence.word[0] == prefix){
+        return node;
+    }
+}
+
  void FreeMemory(Node *node){
     //int i;
 

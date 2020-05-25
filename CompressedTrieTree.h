@@ -24,5 +24,7 @@ Node* CreateRoot();
 Node* CreateNode(Ocurrence ocurrence, int isWordEnd);
 void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position);
 void FreeMemory(Node *node);
+void Print(Ocurrence ocurrence);
+Node* Search(Node *node, char prefix);
 
 #endif // COMPRESSEDTRIETREE_H_INCLUDED
