@@ -99,7 +99,7 @@ int main(){
         position++;
     }
 
-    int param; //para teste: 0 = interactive / 1 = exp
+    int param; //para teste: 0 = interactive / other = exp
     fflush(stdin);
     scanf("%d", &param);
 
@@ -126,6 +126,55 @@ int main(){
             node = Search(tree.root->children[index], prefixo[0]);
 
             Print(node->ocurrence);
+        }
+    }
+    else{
+        rewind(pointer_txt);
+        c = tolower(getc(pointer_txt));
+
+        int k = 0;
+
+        int position = 0;
+        while(c != EOF){
+
+            int j = 0;
+            int i;
+
+            while(c != ' ' && c != EOF && c != '\n'){
+
+                for(i = 0; i < 26; i++){
+                    if(c == alphabet[i]){
+
+                        word[j] = c;
+                        j++;
+                        break;
+                    }
+                }
+
+                c = tolower(getc(pointer_txt));
+            }
+
+            if(word[0] != '\0'){
+                position = ftell(pointer_txt) - j;
+                CreateOcurrence(&ocurrence, word, j,position);
+                printf("%s\n", word);
+
+                Insert(&tree, ocurrence, prefix, sufix, sufix2);
+                k++;
+
+                for(y = 0; y < 50; y++){
+                    word[y] = '\0';
+                }
+            }
+
+            for(x = 0; x < 30; x++){
+                prefix[x] = '\0';
+                sufix[x] = '\0';
+                sufix2[x] = '\0';
+            }
+
+            c = tolower(getc(pointer_txt));
+            position++;
         }
     }
 
