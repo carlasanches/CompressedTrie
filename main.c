@@ -12,9 +12,6 @@
 
 int main(){
 
-    clock_t t;
-    t = clock();
-
     FILE *pointer_txt;
     char c;
     char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
@@ -130,60 +127,28 @@ int main(){
     }
     else{
         rewind(pointer_txt);
-        c = tolower(getc(pointer_txt));
 
-        int k = 0;
+        clock_t t;
+        t = clock();
 
-        int position = 0;
-        while(c != EOF){
+        Node *exp_node;
+        exp_node = malloc(sizeof(Node));
 
-            int j = 0;
-            int i;
+        printf("sugestões: ");
+        exp_node = Search(tree.root->children[0], 'a');
 
-            while(c != ' ' && c != EOF && c != '\n'){
+        Print(exp_node->ocurrence);
 
-                for(i = 0; i < 26; i++){
-                    if(c == alphabet[i]){
+        t = clock() - t;
+        printf("TEMPO: %lf ms", (double) t);
 
-                        word[j] = c;
-                        j++;
-                        break;
-                    }
-                }
-
-                c = tolower(getc(pointer_txt));
-            }
-
-            if(word[0] != '\0'){
-                position = ftell(pointer_txt) - j;
-                CreateOcurrence(&ocurrence, word, j,position);
-                printf("%s\n", word);
-
-                Insert(&tree, ocurrence, prefix, sufix, sufix2);
-                k++;
-
-                for(y = 0; y < 50; y++){
-                    word[y] = '\0';
-                }
-            }
-
-            for(x = 0; x < 30; x++){
-                prefix[x] = '\0';
-                sufix[x] = '\0';
-                sufix2[x] = '\0';
-            }
-
-            c = tolower(getc(pointer_txt));
-            position++;
-        }
     }
 
     fclose(pointer_txt);
 
     FreeMemory(tree.root);
 
-    t = clock() - t;
-    printf("TEMPO: %lf ms", (double) t);
+
 
     return 0;
 }
