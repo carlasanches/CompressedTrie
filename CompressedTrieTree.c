@@ -8,11 +8,69 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NUM_CHILDREN 26
+#define ALPHABET 26
 
 void Initialize(CompressedTrieTree *tree){
-   tree->root = NULL;
+    tree->root = malloc(sizeof(Node));
+    tree->root->children = (malloc(ALPHABET * sizeof(Node)));
+    //other root attributes are not important
 }
+
+void Insert(CompressedTrieTree *tree, char *word){
+
+    int index = word[0] - 'a';  /*Calculates the correct position to insert the word based on the value
+                                            of the character 'a' in the ASCII table*/
+                                /*Calcula a posição correta para inserir a palavra baseado no valor do
+                                  caracter 'a' na tabela ASCII*/
+
+    int i = 0;
+
+    while(word[i] != '\0'){
+        tree->root->children[index].word[i] = word[i];
+        i++;
+    }
+    tree->root->children[index].word[i+1] = '\0';
+    tree->root->children[index].ocurrences[0] = 0;
+    tree->root->children[index].is_word_end = 0;
+}
+
+/*void InitNode(char *word){
+
+
+}*/
+
+/*Node NewNode(char *word){
+
+    Node *node = malloc(sizeof(Node));
+
+    node->children = NULL;
+    node->ocurrence.ocurrences = (int*) malloc(sizeof(int));
+
+    node->ocurrence.ocurrences[0] = ocurrence.ocurrences[0];
+    printf("%d\n", node->ocurrence.ocurrences[0]);
+    node->ocurrence.length = ocurrence.length;
+    node->isWordEnd = isWordEnd;
+
+    int i = 0;
+
+    while(word[i] != '\0'){
+        node->word[i] = word[i];
+        node->word[i+1] = '\0';
+        i++;
+    }
+
+
+
+    for(i = 0; i < ocurrence.length; i++){
+        node->ocurrence.word[i] = ocurrence.word[i];
+    }
+
+    for(i = 0; i < 26; i++){
+        node->children[i] = NULL;
+    }
+
+    return node;
+}*/
 
 int isEmpty(CompressedTrieTree tree){
     return(tree.root == NULL);
@@ -20,7 +78,7 @@ int isEmpty(CompressedTrieTree tree){
 
 /*Essa função inicializa os filhos da raiz e foi criada para lidar com a particularidade
    da trie possuir uma raiz vazia*/
-Node* CreateRoot(){
+/*Node* CreateRoot(){
 
     Node *node = malloc(sizeof(Node));
 
@@ -36,9 +94,9 @@ Node* CreateRoot(){
     }
 
     return node;
-}
+}*/
 
-void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position){
+/*void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position){
 
     length++; //aumento o tamanho da palavra para que ela receba o primeiro \0 de word
     ocurrence->ocurrences = (int*) malloc(sizeof(int));
@@ -52,41 +110,15 @@ void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position)
     for(x = 0; x < length; x++){
         ocurrence->word[x] = word[x];
     }
-}
+}*/
 
-Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
+/* void Insert(CompressedTrieTree *tree, Ocurrence ocurrence, char *prefix, char *sufix, char *sufix2){
 
-    Node *node = malloc(sizeof(Node));
-
-    node->children = malloc(26 * sizeof(Node*));
-    node->ocurrence.word = (char*) malloc(ocurrence.length * sizeof(char));
-    node->ocurrence.ocurrences = (int*) malloc(sizeof(int));
-
-    node->ocurrence.ocurrences[0] = ocurrence.ocurrences[0];
-    printf("%d\n", node->ocurrence.ocurrences[0]);
-    node->ocurrence.length = ocurrence.length;
-    node->isWordEnd = isWordEnd;
-
-    int i;
-
-    for(i = 0; i < ocurrence.length; i++){
-        node->ocurrence.word[i] = ocurrence.word[i];
-    }
-
-    for(i = 0; i < 26; i++){
-        node->children[i] = NULL;
-    }
-
-    return node;
-}
-
- void Insert(CompressedTrieTree *tree, Ocurrence ocurrence, char *prefix, char *sufix, char *sufix2){
-
-    int index = ocurrence.word[0] - 'a';    /*Calcula a posição correta para inserir a palavra baseado no valor do
+    int index = ocurrence.word[0] - 'a';*/    /*Calcula a posição correta para inserir a palavra baseado no valor do
                                                 caracter 'a' na tabela ASCII*/
                                             /*Calculates the correct position to insert the word based on the value
                                                 of the character 'a' in the ASCII table*/
-
+/*
     if(isEmpty(*tree)){
 
         int isWordEnd = 1;
@@ -174,18 +206,18 @@ Node* CreateNode(Ocurrence ocurrence, int isWordEnd){
             }
         }
     }
- }
+ }*/
 
-void Print(Ocurrence ocurrence){
+/*void Print(Ocurrence ocurrence){
     printf("%s\n", ocurrence.word);
-}
+}*/
 
-Node* Search(Node *node, char prefix){
+/*Node* Search(Node *node, char prefix){
 
     if(node == NULL || node->ocurrence.word[0] == prefix){
         return node;
     }
-}
+}*/
 
  void FreeMemory(Node *node){
     //int i;

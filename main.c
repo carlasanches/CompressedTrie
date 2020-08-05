@@ -14,6 +14,63 @@ int main(){
 
     FILE *pointer_txt;
     char c;
+    char word[50];
+    char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
+
+    CompressedTrieTree tree;
+    Initialize(&tree);
+
+    int x;
+
+    for(x = 0; x < 50; x++){
+        word[x] = '\0';
+    }
+
+    pointer_txt = fopen("arq.txt","r");
+
+    if(pointer_txt == NULL){
+        printf("Error");
+        return 1;
+    }
+
+    c = tolower(getc(pointer_txt));
+
+    while(c != EOF){
+
+        int j = 0;
+        int i;
+
+        while(c != ' ' && c != EOF && c != '\n'){
+
+            for(i = 0; i < 26; i++){
+                if(c == alphabet[i]){
+
+                    word[j] = c;
+                    j++;
+                    break;
+                }
+            }
+
+            c = tolower(getc(pointer_txt));
+        }
+
+        if(word[0] != '\0'){
+            printf("%s\n", word);
+
+            Insert(&tree, word);
+
+            for(x = 0; x < 50; x++){
+                word[x] = '\0';
+            }
+        }
+
+        c = tolower(getc(pointer_txt));
+    }
+
+    /*
+
+    FILE *pointer_txt;
+    char c;
     char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
 
     CompressedTrieTree tree;
@@ -38,10 +95,10 @@ int main(){
         word[y] = '\0';
     }
 
-    Initialize(&tree); /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
+    Initialize(&tree); */ /* ponteiro do parâmetro recebe o endereço de memória da variável tree.
                           Assim, ele consegue alterar os valores de tree na função Initialize */
 
-    pointer_txt = fopen("test.txt","r");
+   /* pointer_txt = fopen("test.txt","r");
 
     if(pointer_txt == NULL){
         printf("Error");
@@ -146,7 +203,7 @@ int main(){
 
     fclose(pointer_txt);
 
-    FreeMemory(tree.root);
+    FreeMemory(tree.root);*/
 
 
 
