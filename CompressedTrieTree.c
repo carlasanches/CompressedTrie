@@ -34,6 +34,12 @@ void Insert(CompressedTrieTree *tree, char *word){
     tree->root->children[index].is_word_end = 0;
 }
 
+ void FreeMemory(Node *node){
+    if(node != NULL){
+        free(node);
+    }
+ }
+
 /*void InitNode(char *word){
 
 
@@ -218,18 +224,5 @@ int isEmpty(CompressedTrieTree tree){
         return node;
     }
 }*/
-
- void FreeMemory(Node *node){
-    //int i;
-
-    free(node);
-
-    // if(!node){
-    //     for(i = 0; i <= 25; i++){
-    //         FreeMemory(node->children[i]);
-    //     }
-    //     free(node);
-    // }
- }
 
 

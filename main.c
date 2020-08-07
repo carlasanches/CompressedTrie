@@ -26,7 +26,7 @@ int main(){
         word[x] = '\0';
     }
 
-    pointer_txt = fopen("arq.txt","r");
+    pointer_txt = fopen("test.txt","r");
 
     if(pointer_txt == NULL){
         printf("Error");
@@ -66,6 +66,9 @@ int main(){
 
         c = tolower(getc(pointer_txt));
     }
+
+    FreeMemory(tree.root->children);
+    FreeMemory(tree.root);
 
     /*
 
