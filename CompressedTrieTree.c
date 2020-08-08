@@ -12,8 +12,16 @@
 
 void Initialize(CompressedTrieTree *tree){
     tree->root = malloc(sizeof(Node));
-    tree->root->children = (malloc(ALPHABET * sizeof(Node)));
-    //other root attributes are not important
+    tree->root->children = malloc(ALPHABET * sizeof(Node));
+
+    int i;
+
+    for(i = 0; i < ALPHABET; i++){
+        tree->root->children[i].children = NULL;
+    }
+
+    //Other root attributes are not important
+    //Outros atributos da raiz não são importantes
 }
 
 void Insert(CompressedTrieTree *tree, char *word){
@@ -29,15 +37,16 @@ void Insert(CompressedTrieTree *tree, char *word){
         tree->root->children[index].word[i] = word[i];
         i++;
     }
-    tree->root->children[index].word[i+1] = '\0';
+    tree->root->children[index].word[i] = '\0';
     tree->root->children[index].ocurrences[0] = 0;
-    tree->root->children[index].is_word_end = 0;
+    tree->root->children[index].is_word_end = 1;
 }
 
  void FreeMemory(Node *node){
-    if(node != NULL){
+     if(node != NULL){
+        FreeMemory(node->children);
         free(node);
-    }
+     }
  }
 
 /*void InitNode(char *word){

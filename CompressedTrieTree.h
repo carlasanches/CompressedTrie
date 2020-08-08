@@ -14,9 +14,10 @@ typedef struct{
 
 void Initialize(CompressedTrieTree *tree);
 void Insert(CompressedTrieTree *tree, char *word);
+void FreeMemory(Node *node);
 //void InitNode(CompressedTrieTree *tree, int position, char *word);
 
-void FreeMemory(Node *node);
+
 //
 //void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position);
 //void Insert(CompressedTrieTree *tree, Ocurrence ocurrence, char *prefix, char *sufix, char *sufix2);

@@ -67,7 +67,6 @@ int main(){
         c = tolower(getc(pointer_txt));
     }
 
-    FreeMemory(tree.root->children);
     FreeMemory(tree.root);
 
     /*
