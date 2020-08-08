@@ -57,7 +57,6 @@ int main(){
 
         if(word[0] != '\0'){
             position = ftell(pointer_txt) - j;
-            printf("%s\n", word);
 
             Insert(&tree, word, position);
 
@@ -69,6 +68,8 @@ int main(){
         c = tolower(getc(pointer_txt));
         position++;
     }
+
+    Print(tree);
 
     FreeMemory(tree.root);
     free(tree.root);

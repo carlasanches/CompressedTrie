@@ -39,8 +39,16 @@ void Insert(CompressedTrieTree *tree, char *word, int position){
     }
     tree->root->children[index].word[i] = '\0';
     tree->root->children[index].ocurrences[0] = position;
-    printf("%d\n", tree->root->children[index].ocurrences[0]);
     tree->root->children[index].is_word_end = 1;
+}
+
+void Print(CompressedTrieTree tree){
+
+    int i;
+
+    for(i = 0; i < ALPHABET; i++){
+        printf("%s\n", tree.root->children[i].word);
+    }
 }
 
 void FreeMemory(Node *node){
