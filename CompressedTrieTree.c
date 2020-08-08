@@ -24,7 +24,7 @@ void Initialize(CompressedTrieTree *tree){
     //Outros atributos da raiz não são importantes
 }
 
-void Insert(CompressedTrieTree *tree, char *word){
+void Insert(CompressedTrieTree *tree, char *word, int position){
 
     int index = word[0] - 'a';  /*Calculates the correct position to insert the word based on the value
                                             of the character 'a' in the ASCII table*/
@@ -38,21 +38,22 @@ void Insert(CompressedTrieTree *tree, char *word){
         i++;
     }
     tree->root->children[index].word[i] = '\0';
-    tree->root->children[index].ocurrences[0] = 0;
+    tree->root->children[index].ocurrences[0] = position;
+    printf("%d\n", tree->root->children[index].ocurrences[0]);
     tree->root->children[index].is_word_end = 1;
 }
 
- void FreeMemory(Node *node){
-     int i;
+void FreeMemory(Node *node){
+    int i;
 
-     if(node->children != NULL){
+    if(node->children != NULL){
 
         for(i = 0; i < ALPHABET; i++){
             FreeMemory(&node->children[i]);
         }
         free(node->children);
-     }
- }
+    }
+}
 
 /*void InitNode(char *word){
 
