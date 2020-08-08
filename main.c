@@ -68,6 +68,7 @@ int main(){
     }
 
     FreeMemory(tree.root);
+    free(tree.root);
 
     /*
 

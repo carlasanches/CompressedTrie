@@ -43,9 +43,14 @@ void Insert(CompressedTrieTree *tree, char *word){
 }
 
  void FreeMemory(Node *node){
-     if(node != NULL){
-        FreeMemory(node->children);
-        free(node);
+     int i;
+
+     if(node->children != NULL){
+
+        for(i = 0; i < ALPHABET; i++){
+            FreeMemory(&node->children[i]);
+        }
+        free(node->children);
      }
  }
 
