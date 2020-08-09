@@ -32,19 +32,8 @@ void Insert(Node *node, char *word, int position){
                                 /*Calcula a posição correta para inserir a palavra baseado no valor do
                                   caracter 'a' na tabela ASCII*/
 
-    if(node->children[index].word[0] == '\0'){
-        int i = 0;
+    if(node->children[index].word[0] != '\0'){
 
-        while(word[i] != '\0'){
-
-            node->children[index].word[i] = word[i];
-            i++;
-        }
-        node->children[index].word[i] = '\0';
-        node->children[index].ocurrences[0] = position;
-        node->children[index].is_word_end = 1;
-    }
-    else{
         char suffix_1[50];
         char suffix_2[50];
         char prefix[50];
@@ -84,17 +73,31 @@ void Insert(Node *node, char *word, int position){
         }
         node->children[index].word[i] = '\0';
 
-        if(node->children[index].children == NULL){
-            node->children[index].children = malloc(ALPHABET * sizeof(Node));
+        Node *temp = node->children[index].children;
 
-            for(i = 0; i < ALPHABET; i++){
-                node->children[index].children[i].word[0] = '\0';
-                node->children[index].children[i].children = NULL;
-            }
+        node->children[index].children = malloc(ALPHABET * sizeof(Node));
+
+        for(i = 0; i < ALPHABET; i++){
+            node->children[index].children[i].word[0] = '\0';
+            node->children[index].children[i].children = NULL;
         }
 
         Insert(node->children,suffix_1,position);
         Insert(node->children,suffix_2,position);
+
+        node->children[index].children[suffix_2[0] - 'a'].children = temp;
+    }
+    else{
+        int i = 0;
+
+        while(word[i] != '\0'){
+
+            node->children[index].word[i] = word[i];
+            i++;
+        }
+        node->children[index].word[i] = '\0';
+        node->children[index].ocurrences[0] = position;
+        node->children[index].is_word_end = 1;
     }
 }
 
