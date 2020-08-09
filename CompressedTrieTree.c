@@ -84,11 +84,13 @@ void Insert(Node *node, char *word, int position){
         }
         node->children[index].word[i] = '\0';
 
-        node->children[index].children = malloc(ALPHABET * sizeof(Node));
+        if(node->children[index].children == NULL){
+            node->children[index].children = malloc(ALPHABET * sizeof(Node));
 
-        for(i = 0; i < ALPHABET; i++){
-            node->children[index].children[i].word[0] = '\0';
-            node->children[index].children[i].children = NULL;
+            for(i = 0; i < ALPHABET; i++){
+                node->children[index].children[i].word[0] = '\0';
+                node->children[index].children[i].children = NULL;
+            }
         }
 
         Insert(node->children,suffix_1,position);
