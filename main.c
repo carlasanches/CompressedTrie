@@ -58,7 +58,7 @@ int main(){
         if(word[0] != '\0'){
             position = ftell(pointer_txt) - j;
 
-            Insert(&tree, word, position);
+            Insert(tree.root, word, position);
 
             for(x = 0; x < 50; x++){
                 word[x] = '\0';
@@ -69,7 +69,8 @@ int main(){
         position++;
     }
 
-    Print(tree);
+
+    Print(tree.root);
 
     FreeMemory(tree.root);
     free(tree.root);

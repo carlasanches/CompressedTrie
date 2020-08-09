@@ -17,6 +17,7 @@ void Initialize(CompressedTrieTree *tree){
     int i;
 
     for(i = 0; i < ALPHABET; i++){
+        tree->root->children[i].word[0] = '\0';
         tree->root->children[i].children = NULL;
     }
 
@@ -24,30 +25,88 @@ void Initialize(CompressedTrieTree *tree){
     //Outros atributos da raiz não são importantes
 }
 
-void Insert(CompressedTrieTree *tree, char *word, int position){
+void Insert(Node *node, char *word, int position){
 
     int index = word[0] - 'a';  /*Calculates the correct position to insert the word based on the value
                                             of the character 'a' in the ASCII table*/
                                 /*Calcula a posição correta para inserir a palavra baseado no valor do
                                   caracter 'a' na tabela ASCII*/
 
-    int i = 0;
+    if(node->children[index].word[0] == '\0'){
+        int i = 0;
 
-    while(word[i] != '\0'){
-        tree->root->children[index].word[i] = word[i];
-        i++;
+        while(word[i] != '\0'){
+
+            node->children[index].word[i] = word[i];
+            i++;
+        }
+        node->children[index].word[i] = '\0';
+        node->children[index].ocurrences[0] = position;
+        node->children[index].is_word_end = 1;
     }
-    tree->root->children[index].word[i] = '\0';
-    tree->root->children[index].ocurrences[0] = position;
-    tree->root->children[index].is_word_end = 1;
+    else{
+        char suffix_1[50];
+        char suffix_2[50];
+        char prefix[50];
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while(word[i] != '\0' && word[i] == node->children[index].word[i] && node->children[index].word[i] != '\0'){
+            prefix[i] = word[i];
+            i++;
+            j++;
+        }
+        prefix[i] = '\0';
+
+        while(word[i] != '\0'){
+            suffix_1[k] = word[i];
+            i++;
+            k++;
+        }
+        suffix_1[k] = '\0';
+
+        k = 0;
+
+        while(node->children[index].word[j] != '\0'){
+            suffix_2[k] = node->children[index].word[j];
+            j++;
+            k++;
+        }
+        suffix_2[k] = '\0';
+
+        i = 0;
+
+        while(prefix[i] != '\0'){
+            node->children[index].word[i] = prefix[i];
+            i++;
+        }
+        node->children[index].word[i] = '\0';
+
+        node->children[index].children = malloc(ALPHABET * sizeof(Node));
+
+        for(i = 0; i < ALPHABET; i++){
+            node->children[index].children[i].word[0] = '\0';
+            node->children[index].children[i].children = NULL;
+        }
+
+        Insert(node->children,suffix_1,position);
+        Insert(node->children,suffix_2,position);
+    }
 }
 
-void Print(CompressedTrieTree tree){
+void Print(Node *node){
 
     int i;
 
-    for(i = 0; i < ALPHABET; i++){
-        printf("%s\n", tree.root->children[i].word);
+    if(node->children != NULL){
+        for(i = 0; i < ALPHABET; i++){
+            if(node->children[i].word[0] != '\0'){
+                printf("%s\n", node->children[i].word);
+                Print(&node->children[i]);
+            }
+        }
     }
 }
 
@@ -55,7 +114,6 @@ void FreeMemory(Node *node){
     int i;
 
     if(node->children != NULL){
-
         for(i = 0; i < ALPHABET; i++){
             FreeMemory(&node->children[i]);
         }
