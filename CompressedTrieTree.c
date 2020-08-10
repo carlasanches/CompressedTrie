@@ -50,49 +50,56 @@ void Insert(Node *node, char *word, int position){
         }
         prefix[i] = '\0';
 
-        while(word[i] != '\0'){
-            suffix_1[k] = word[i];
-            i++;
-            k++;
+        if(node->children[index].word[i] == '\0' && word[i] == '\0'){
+            node->children[index].is_word_end = 1;
+            node->children[index].ocurrences[node->children[index].num_ocurrences] = position;
+            node->children[index].num_ocurrences++;
         }
-        suffix_1[k] = '\0';
+        else{
+            while(word[i] != '\0'){
+                suffix_1[k] = word[i];
+                i++;
+                k++;
+            }
+            suffix_1[k] = '\0';
 
-        k = 0;
+            k = 0;
 
-        while(node->children[index].word[j] != '\0'){
-            suffix_2[k] = node->children[index].word[j];
-            j++;
-            k++;
-        }
-        suffix_2[k] = '\0';
+            while(node->children[index].word[j] != '\0'){
+                suffix_2[k] = node->children[index].word[j];
+                j++;
+                k++;
+            }
+            suffix_2[k] = '\0';
 
-        i = 0;
+            i = 0;
 
-        while(prefix[i] != '\0'){
-            node->children[index].word[i] = prefix[i];
-            i++;
-        }
-        node->children[index].word[i] = '\0';
-        node->children[index].is_word_end = 0;
-        current_position = node->children[index].ocurrences[0];
-        node->children[index].ocurrences[0] = -1;
+            while(prefix[i] != '\0'){
+                node->children[index].word[i] = prefix[i];
+                i++;
+            }
+            node->children[index].word[i] = '\0';
+            node->children[index].is_word_end = 0;
+            current_position = node->children[index].ocurrences[0];
+            node->children[index].ocurrences[0] = -1;
 
-        Node *temp = node->children[index].children;
+            Node *temp = node->children[index].children;
 
-        node->children[index].children = malloc(ALPHABET * sizeof(Node));
+            node->children[index].children = malloc(ALPHABET * sizeof(Node));
 
-        for(i = 0; i < ALPHABET; i++){
-            node->children[index].children[i].word[0] = '\0';
-            node->children[index].children[i].children = NULL;
-        }
+            for(i = 0; i < ALPHABET; i++){
+                node->children[index].children[i].word[0] = '\0';
+                node->children[index].children[i].children = NULL;
+            }
 
-        Insert(node->children,suffix_1,position);
-        Insert(node->children,suffix_2,current_position);
+            Insert(node->children,suffix_1,position);
+            Insert(node->children,suffix_2,current_position);
 
-        node->children[index].children[suffix_2[0] - 'a'].children = temp;
+            node->children[index].children[suffix_2[0] - 'a'].children = temp;
 
-        if(temp != NULL){
-            node->children[index].children[suffix_2[0] - 'a'].is_word_end = 0;
+            if(temp != NULL){
+                node->children[index].children[suffix_2[0] - 'a'].is_word_end = 0;
+            }
         }
     }
     else{
@@ -119,7 +126,12 @@ void Print(Node *node){
             if(node->children[i].word[0] != '\0'){
                 printf("%s ", node->children[i].word);
                 printf("%d ", node->children[i].is_word_end);
-                printf("%d\n", node->children[i].ocurrences[0]);
+
+                int j;
+                for(j = 0; j < node->children[i].num_ocurrences; j++){
+                    printf("%d ", node->children[i].ocurrences[j]);
+                }
+                printf("\n");
                 Print(&node->children[i]);
             }
         }
