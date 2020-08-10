@@ -82,6 +82,53 @@ void Insert(Node *node, char *word, int position){
 
             Insert(node->children,suffix_1,position);
         }
+        else if(node->children[index].word[i] != '\0' && word[i] == '\0'){
+
+            k = 0;
+
+            while(node->children[index].word[j] != '\0'){
+                suffix_2[k] = node->children[index].word[j];
+                j++;
+                k++;
+            }
+            suffix_2[k] = '\0';
+
+            i = 0;
+
+            while(prefix[i] != '\0'){
+                node->children[index].word[i] = prefix[i];
+                i++;
+            }
+            node->children[index].word[i] = '\0';
+            current_position = node->children[index].ocurrences[0];
+
+            Node *temp = node->children[index].children;
+
+            node->children[index].children = malloc(ALPHABET * sizeof(Node));
+
+            for(i = 0; i < ALPHABET; i++){
+                node->children[index].children[i].word[0] = '\0';
+                node->children[index].children[i].num_ocurrences = 0;
+                node->children[index].children[i].children = NULL;
+            }
+
+            Insert(node->children,suffix_2,current_position);
+
+            node->children[index].children[suffix_2[0] - 'a'].children = temp;
+
+            //Resolve temporariamente o problema de não poder inserir todas as ocorrências de um nó quando este é dividido
+            //Temporarily resolves the problem of not being able to insert all occurrences of a node when it is split
+            i = 0;
+            while(node->children[index].ocurrences[i] >= 0){
+                node->children[index].children[suffix_2[0] - 'a'].ocurrences[i] = node->children[index].ocurrences[i];
+                i++;
+            }
+            node->children[index].children[suffix_2[0] - 'a'].ocurrences[i] = -1;
+
+            node->children[index].ocurrences[0] = position;
+            node->children[index].ocurrences[1] = -1;
+            node->children[index].num_ocurrences = 1;
+        }
         else{
             while(word[i] != '\0'){
                 suffix_1[k] = word[i];
@@ -106,7 +153,7 @@ void Insert(Node *node, char *word, int position){
                 i++;
             }
             node->children[index].word[i] = '\0';
-            node->children[index].is_word_end = 0;
+
             current_position = node->children[index].ocurrences[0];
 
             Node *temp = node->children[index].children;
@@ -124,9 +171,9 @@ void Insert(Node *node, char *word, int position){
 
             node->children[index].children[suffix_2[0] - 'a'].children = temp;
 
-            //se o nó tiver filhos, o sufixo receberá esses filhos e não poderá ser um final de palavra
-            //if the node has children, the suffix will receive those children and cannot be an end of word
-            if(temp != NULL){
+            //se o nó tiver filhos e não for uma terminação de palavra, o sufixo receberá esses filhos e não poderá ser um final de palavra
+            //if the node has children and is not a word ending, the suffix will receive those children and cannot be an end of word
+            if(temp != NULL && node->children[index].is_word_end == 0){
                 node->children[index].children[suffix_2[0] - 'a'].is_word_end = 0;
             }
 
@@ -140,6 +187,8 @@ void Insert(Node *node, char *word, int position){
             node->children[index].children[suffix_2[0] - 'a'].ocurrences[i] = -1;
 
             node->children[index].ocurrences[0] = -1;
+
+            node->children[index].is_word_end = 0;
         }
     }
     else{
