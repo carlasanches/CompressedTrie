@@ -56,7 +56,7 @@ int main(){
         }
 
         if(word[0] != '\0'){
-            position = ftell(pointer_txt) - j;
+            position = ftell(pointer_txt) - (j+1);
 
             Insert(tree.root, word, position);
 
@@ -66,7 +66,6 @@ int main(){
         }
 
         c = tolower(getc(pointer_txt));
-        position++;
     }
 
 

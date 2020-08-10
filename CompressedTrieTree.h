@@ -1,3 +1,9 @@
+/*
+    Compressed Trie Tree
+    GitHub - https://github.com/carlasanches/CompressedTrieTree
+    Author - Carla Sanches
+*/
+
 #ifndef COMPRESSEDTRIETREE_H_INCLUDED
 #define COMPRESSEDTRIETREE_H_INCLUDED
 
@@ -5,6 +11,7 @@ typedef struct node{
     struct node *children;
     char word[50];
     int ocurrences[100];
+    int num_ocurrences; //counts the number of occurrences of a word
     int is_word_end;
 }Node;
 

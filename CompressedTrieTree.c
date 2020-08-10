@@ -41,6 +41,7 @@ void Insert(Node *node, char *word, int position){
         int i = 0;
         int j = 0;
         int k = 0;
+        int current_position = 0;
 
         while(word[i] != '\0' && word[i] == node->children[index].word[i] && node->children[index].word[i] != '\0'){
             prefix[i] = word[i];
@@ -72,6 +73,9 @@ void Insert(Node *node, char *word, int position){
             i++;
         }
         node->children[index].word[i] = '\0';
+        node->children[index].is_word_end = 0;
+        current_position = node->children[index].ocurrences[0];
+        node->children[index].ocurrences[0] = -1;
 
         Node *temp = node->children[index].children;
 
@@ -83,9 +87,13 @@ void Insert(Node *node, char *word, int position){
         }
 
         Insert(node->children,suffix_1,position);
-        Insert(node->children,suffix_2,position);
+        Insert(node->children,suffix_2,current_position);
 
         node->children[index].children[suffix_2[0] - 'a'].children = temp;
+
+        if(temp != NULL){
+            node->children[index].children[suffix_2[0] - 'a'].is_word_end = 0;
+        }
     }
     else{
         int i = 0;
@@ -97,6 +105,7 @@ void Insert(Node *node, char *word, int position){
         }
         node->children[index].word[i] = '\0';
         node->children[index].ocurrences[0] = position;
+        node->children[index].num_ocurrences = 1;
         node->children[index].is_word_end = 1;
     }
 }
@@ -108,7 +117,9 @@ void Print(Node *node){
     if(node->children != NULL){
         for(i = 0; i < ALPHABET; i++){
             if(node->children[i].word[0] != '\0'){
-                printf("%s\n", node->children[i].word);
+                printf("%s ", node->children[i].word);
+                printf("%d ", node->children[i].is_word_end);
+                printf("%d\n", node->children[i].ocurrences[0]);
                 Print(&node->children[i]);
             }
         }
