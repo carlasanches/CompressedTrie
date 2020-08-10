@@ -21,6 +21,7 @@ typedef struct{
 
 void Initialize(CompressedTrieTree *tree);
 void Insert(Node *node, char *word, int position);
+void InsertSuffix(Node *node, char *word, int *ocurrences);
 void FreeMemory(Node *node);
 void Print(Node *node);
 //void InitNode(CompressedTrieTree *tree, int position, char *word);

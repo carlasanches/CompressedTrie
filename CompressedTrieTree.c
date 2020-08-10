@@ -18,19 +18,21 @@ void Initialize(CompressedTrieTree *tree){
 
     for(i = 0; i < ALPHABET; i++){
         tree->root->children[i].word[0] = '\0';
+        tree->root->children[i].num_ocurrences = 0;
         tree->root->children[i].children = NULL;
     }
 
-    //Other root attributes are not important
     //Outros atributos da raiz não são importantes
+    //Other root attributes are not important
 }
 
 void Insert(Node *node, char *word, int position){
 
-    int index = word[0] - 'a';  /*Calculates the correct position to insert the word based on the value
-                                            of the character 'a' in the ASCII table*/
-                                /*Calcula a posição correta para inserir a palavra baseado no valor do
+    int index = word[0] - 'a'; /*Calcula a posição correta para inserir a palavra baseado no valor do
                                   caracter 'a' na tabela ASCII*/
+                               /*Calculates the correct position to insert the word based on the value
+                                            of the character 'a' in the ASCII table*/
+
 
     if(node->children[index].word[0] != '\0'){
 
@@ -53,7 +55,32 @@ void Insert(Node *node, char *word, int position){
         if(node->children[index].word[i] == '\0' && word[i] == '\0'){
             node->children[index].is_word_end = 1;
             node->children[index].ocurrences[node->children[index].num_ocurrences] = position;
+            node->children[index].ocurrences[(node->children[index].num_ocurrences + 1)] = -1;
             node->children[index].num_ocurrences++;
+        }
+        else if(node->children[index].word[i] == '\0' && word[i] != '\0'){
+
+            k = 0;
+
+            while(word[i] != '\0'){
+                suffix_1[k] = word[i];
+                i++;
+                k++;
+            }
+            suffix_1[k] = '\0';
+
+            if(node->children[index].children == NULL){
+
+                node->children[index].children = malloc(ALPHABET * sizeof(Node));
+
+                for(i = 0; i < ALPHABET; i++){
+                    node->children[index].children[i].word[0] = '\0';
+                    node->children[index].children[i].num_ocurrences = 0;
+                    node->children[index].children[i].children = NULL;
+                }
+            }
+
+            Insert(node->children,suffix_1,position);
         }
         else{
             while(word[i] != '\0'){
@@ -81,7 +108,6 @@ void Insert(Node *node, char *word, int position){
             node->children[index].word[i] = '\0';
             node->children[index].is_word_end = 0;
             current_position = node->children[index].ocurrences[0];
-            node->children[index].ocurrences[0] = -1;
 
             Node *temp = node->children[index].children;
 
@@ -89,6 +115,7 @@ void Insert(Node *node, char *word, int position){
 
             for(i = 0; i < ALPHABET; i++){
                 node->children[index].children[i].word[0] = '\0';
+                node->children[index].children[i].num_ocurrences = 0;
                 node->children[index].children[i].children = NULL;
             }
 
@@ -97,9 +124,22 @@ void Insert(Node *node, char *word, int position){
 
             node->children[index].children[suffix_2[0] - 'a'].children = temp;
 
+            //se o nó tiver filhos, o sufixo receberá esses filhos e não poderá ser um final de palavra
+            //if the node has children, the suffix will receive those children and cannot be an end of word
             if(temp != NULL){
                 node->children[index].children[suffix_2[0] - 'a'].is_word_end = 0;
             }
+
+            //Resolve temporariamente o problema de não poder inserir todas as ocorrências de um nó quando este é dividido
+            //Temporarily resolves the problem of not being able to insert all occurrences of a node when it is split
+            i = 0;
+            while(node->children[index].ocurrences[i] >= 0){
+                node->children[index].children[suffix_2[0] - 'a'].ocurrences[i] = node->children[index].ocurrences[i];
+                i++;
+            }
+            node->children[index].children[suffix_2[0] - 'a'].ocurrences[i] = -1;
+
+            node->children[index].ocurrences[0] = -1;
         }
     }
     else{
@@ -111,8 +151,9 @@ void Insert(Node *node, char *word, int position){
             i++;
         }
         node->children[index].word[i] = '\0';
-        node->children[index].ocurrences[0] = position;
-        node->children[index].num_ocurrences = 1;
+        node->children[index].ocurrences[node->children[index].num_ocurrences] = position;
+        node->children[index].ocurrences[(node->children[index].num_ocurrences + 1)] = -1;
+        node->children[index].num_ocurrences++;
         node->children[index].is_word_end = 1;
     }
 }
@@ -127,9 +168,10 @@ void Print(Node *node){
                 printf("%s ", node->children[i].word);
                 printf("%d ", node->children[i].is_word_end);
 
-                int j;
-                for(j = 0; j < node->children[i].num_ocurrences; j++){
+                int j = 0;
+                while(node->children[i].ocurrences[j] >= 0){
                     printf("%d ", node->children[i].ocurrences[j]);
+                    j++;
                 }
                 printf("\n");
                 Print(&node->children[i]);
