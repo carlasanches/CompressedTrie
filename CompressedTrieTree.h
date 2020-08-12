@@ -21,18 +21,9 @@ typedef struct{
 
 void Initialize(CompressedTrieTree *tree);
 void Insert(Node *node, char *word, int position);
-void InsertSuffix(Node *node, char *word, int *ocurrences);
 void FreeMemory(Node *node);
-void Print(Node *node);
-//void InitNode(CompressedTrieTree *tree, int position, char *word);
-
-
-//
-//void CreateOcurrence(Ocurrence *ocurrence, char *word, int length, int position);
-//void Insert(CompressedTrieTree *tree, Ocurrence ocurrence, char *prefix, char *sufix, char *sufix2);
-int isEmpty(CompressedTrieTree tree);
-Node* CreateRoot();
-//void Print(Ocurrence ocurrence);
-Node* Search(Node *node, char prefix);
+void PrintWords(Node *node, char *aux_word, int length, int prev_length);
+void PrintTrie(Node *node);
+void Search(Node *node, char *prefix);
 
 #endif // COMPRESSEDTRIETREE_H_INCLUDED

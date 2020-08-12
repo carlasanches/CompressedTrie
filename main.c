@@ -9,8 +9,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <string.h>
 
-int main(){
+int main(int argc, char *argv[]){
+
+    if(argc != 3){
+        return 1;
+    }
+
+    if(strcmp(argv[2],"-interactive") != 0 && strcmp(argv[2],"-exp") != 0){
+        printf("parametro invalido!");
+        return 1;
+    }
 
     FILE *pointer_txt;
     char c;
@@ -26,7 +36,7 @@ int main(){
         word[x] = '\0';
     }
 
-    pointer_txt = fopen("test.txt","r");
+    pointer_txt = fopen(argv[1],"r");
 
     if(pointer_txt == NULL){
         printf("Error");
@@ -68,7 +78,34 @@ int main(){
         c = tolower(getc(pointer_txt));
     }
 
-    Print(tree.root);
+    PrintTrie(tree.root);
+
+    char aux_word[50];
+    strcpy(aux_word,"\0");
+    //int y = 0;
+
+   /* while(tree.root->children[y].word[0] != '\0'){
+        y++;
+    }*/
+
+    PrintWords(tree.root,aux_word,0,0);
+
+    if(strcmp(argv[2],"-interactive") == 0){
+        char prefix[50];
+
+        while(strcmp(prefix,"0") != 0){
+            printf("Entre com o prefixo ou digite 0 para sair: ");
+            fflush(stdin);
+            scanf("%s", prefix);
+
+            if(strcmp(prefix,"0") != 0){
+                Search(tree.root,prefix);
+            }
+        }
+    }
+    else if(strcmp(argv[2],"-exp") == 0){
+
+    }
 
     FreeMemory(tree.root);
     free(tree.root);

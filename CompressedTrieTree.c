@@ -7,6 +7,7 @@
 #include "CompressedTrieTree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define ALPHABET 26
 
@@ -207,7 +208,50 @@ void Insert(Node *node, char *word, int position){
     }
 }
 
-void Print(Node *node){
+void Search(Node *node, char *prefix){
+    int i;
+
+    if(node->children != NULL){
+        for(i = 0; i < ALPHABET; i++){
+            if(node->children[i].word[0] != '\0'){
+                if(strcmp(node->children[i].word,prefix) == 0){
+                    printf("%s ", node->children[i].word);
+                }
+                PrintTrie(&node->children[i]);
+            }
+        }
+    }
+    else{
+        Search(node,prefix);
+    }
+}
+
+void PrintWords(Node *node, char *aux_word, int length, int prev_length){
+    int i = 0;
+
+    prev_length = length;
+    if(node->children != NULL){
+        for(i = 0; i < ALPHABET; i++){
+            if(node->children[i].word[0] != '\0'){
+                length = strlen(node->children[i].word);
+                strcat(aux_word,node->children[i].word);
+                if(node->children[i].is_word_end == 1){
+                    printf("%s\n", aux_word);
+                }
+                PrintWords(&node->children[i],aux_word,length,prev_length);
+            }
+        }
+    }
+    else{
+        int position = strlen(aux_word) - length;
+        aux_word[position] = '\0';
+        return;
+    }
+    int position = strlen(aux_word) - prev_length;
+    aux_word[position] = '\0';
+}
+
+void PrintTrie(Node *node){
 
     int i;
 
@@ -223,7 +267,7 @@ void Print(Node *node){
                     j++;
                 }
                 printf("\n");
-                Print(&node->children[i]);
+                PrintTrie(&node->children[i]);
             }
         }
     }
