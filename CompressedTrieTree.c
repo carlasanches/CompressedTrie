@@ -208,22 +208,38 @@ void Insert(Node *node, char *word, int position){
     }
 }
 
-void Search(Node *node, char *prefix){
-    int i;
+void Search(Node *node, char *word, char *aux_word, int length, int prev_length){
+    int i = 0;
 
+    prev_length = length;
     if(node->children != NULL){
         for(i = 0; i < ALPHABET; i++){
             if(node->children[i].word[0] != '\0'){
-                if(strcmp(node->children[i].word,prefix) == 0){
-                    printf("%s ", node->children[i].word);
+                length = strlen(node->children[i].word);
+                strcat(aux_word,node->children[i].word);
+                if(node->children[i].is_word_end == 1){
+
+                    int j = 0;
+
+                    while(aux_word[j] == word[j]){
+                        j++;
+                    }
+
+                    if(j > 0 && j >= strlen(word)){
+                        printf("\n              %s (%d)", aux_word,node->children[i].num_ocurrences);
+                    }
                 }
-                PrintTrie(&node->children[i]);
+                Search(&node->children[i],word,aux_word,length,prev_length);
             }
         }
     }
     else{
-        Search(node,prefix);
+        int position = strlen(aux_word) - length;
+        aux_word[position] = '\0';
+        return;
     }
+    int position = strlen(aux_word) - prev_length;
+    aux_word[position] = '\0';
 }
 
 void PrintWords(Node *node, char *aux_word, int length, int prev_length){

@@ -94,17 +94,27 @@ int main(int argc, char *argv[]){
         char prefix[50];
 
         while(strcmp(prefix,"0") != 0){
-            printf("Entre com o prefixo ou digite 0 para sair: ");
+            printf("\nEntre com o prefixo ou digite 0 para sair: ");
             fflush(stdin);
             scanf("%s", prefix);
 
             if(strcmp(prefix,"0") != 0){
-                Search(tree.root,prefix);
+
+                printf("   Sugestoes: ");
+                Search(tree.root,prefix,aux_word,0,0);
             }
         }
     }
     else if(strcmp(argv[2],"-exp") == 0){
 
+        char *prefix[10] = {"a","e","i","o","u","b","c","d","z","a"};
+
+        int i;
+
+        for(i = 0; i < 10; i++){
+            printf("\n   Sugestoes: ");
+            Search(tree.root,prefix[i],aux_word,0,0);
+        }
     }
 
     FreeMemory(tree.root);

@@ -24,6 +24,6 @@ void Insert(Node *node, char *word, int position);
 void FreeMemory(Node *node);
 void PrintWords(Node *node, char *aux_word, int length, int prev_length);
 void PrintTrie(Node *node);
-void Search(Node *node, char *prefix);
+void Search(Node *node, char *word, char *aux_word, int length, int prev_length);
 
 #endif // COMPRESSEDTRIETREE_H_INCLUDED
