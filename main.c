@@ -47,7 +47,6 @@ int main(int argc, char *argv[]){
     c = tolower(getc(pointer_txt));
 
     while(c != EOF){
-
         int j = 0;
         int i;
 
@@ -78,17 +77,12 @@ int main(int argc, char *argv[]){
         c = tolower(getc(pointer_txt));
     }
 
-    PrintTrie(tree.root);
+    //PrintTrie(tree.root);
 
     char aux_word[50];
     strcpy(aux_word,"\0");
-    //int y = 0;
 
-   /* while(tree.root->children[y].word[0] != '\0'){
-        y++;
-    }*/
-
-    PrintWords(tree.root,aux_word,0,0);
+    //PrintWords(tree.root,aux_word,0,0);
 
     if(strcmp(argv[2],"-interactive") == 0){
         char prefix[50];
