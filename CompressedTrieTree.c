@@ -229,8 +229,19 @@ void Search(Node *node, char *word, char *aux_word, int length, int prev_length,
                         //printf("\n              %s (%d)", aux_word,node->children[i].num_ocurrences);
 
                         if(ocurrences[0].num_ocurrences > 0){
-                            strcpy(ocurrences[ocurrences->num_ocurrences].word,aux_word);
-                            ocurrences[ocurrences->num_ocurrences].num_ocurrences = node->children[i].num_ocurrences;
+                            int k, x;
+
+                            for(k = 0; k < ocurrences->num_ocurrences; k++){
+                                if(ocurrences[k].num_ocurrences < node->children[i].num_ocurrences){
+                                    break;
+                                }
+                            }
+
+                            for(x = ocurrences->num_ocurrences; x > k; x--){
+                                ocurrences[x] = ocurrences[x-1];
+                            }
+                            strcpy(ocurrences[k].word,aux_word);
+                            ocurrences[k].num_ocurrences = node->children[i].num_ocurrences;
                             ocurrences->num_ocurrences++;
                         }
                         else{

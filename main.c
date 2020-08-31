@@ -92,8 +92,9 @@ int main(int argc, char *argv[]){
 
     if(strcmp(argv[2],"-interactive") == 0){
 
-        Ocurrence ocurrences[100];
+        Ocurrence ocurrences[1000];
         char prefix[50];
+        int j;
 
         while(strcmp(prefix,"0") != 0){
             printf("\nEntre com o prefixo ou digite 0 para sair: ");
@@ -102,8 +103,21 @@ int main(int argc, char *argv[]){
 
             if(strcmp(prefix,"0") != 0){
 
-                printf("   Sugestoes: ");
+                for(j = 0; j < 1000; j++){
+                    ocurrences[j].word[0] = '\0';
+                    ocurrences[j].num_ocurrences = -1;
+                }
+                ocurrences->num_ocurrences = 0;
+
                 Search(tree.root,prefix,aux_word,0,0,ocurrences);
+                printf("   Sugestoes: ");
+
+                j = 0;
+
+                while(ocurrences[j].num_ocurrences > 0){
+                    printf("\n              %s (%d)", ocurrences[j].word, ocurrences[j].num_ocurrences);
+                    j++;
+                }
             }
         }
     }
@@ -121,14 +135,20 @@ int main(int argc, char *argv[]){
 
         for(i = 0; i < 5; i++){
 
+            for(j = 0; j < 1000; j++){
+                ocurrences[j].word[0] = '\0';
+                ocurrences[j].num_ocurrences = -1;
+            }
             ocurrences->num_ocurrences = 0;
-
-            ocurrences[0].num_ocurrences = -1;
 
             Search(tree.root,prefix[i],aux_word,0,0,ocurrences);
             printf("\n   Sugestoes: ");
-            for(j = 0; j < ocurrences->num_ocurrences; j++){
+
+            j = 0;
+
+            while(ocurrences[j].num_ocurrences > 0){
                 printf("\n              %s (%d)", ocurrences[j].word, ocurrences[j].num_ocurrences);
+                j++;
             }
         }
 
