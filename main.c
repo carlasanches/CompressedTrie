@@ -162,7 +162,7 @@ int main(int argc, char *argv[]){
             return 1;
         }
 
-        fprintf(pointer_txt_write, "%lf,%lf,", (double) t, (double) time);
+        fprintf(pointer_txt_write, "%lf,%lf,\n", (double) time, (double) t);
 
         fclose(pointer_txt_write);
     }
