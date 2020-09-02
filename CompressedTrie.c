@@ -4,14 +4,14 @@
     Author - Carla Sanches
 */
 
-#include "CompressedTrieTree.h"
+#include "CompressedTrie.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define ALPHABET 26
 
-void Initialize(CompressedTrieTree *tree){
+void Initialize(CompressedTrie *tree){
     tree->root = malloc(sizeof(Node));
     tree->root->children = malloc(ALPHABET * sizeof(Node));
 
@@ -33,7 +33,6 @@ void Insert(Node *node, char *word, int position){
                                   caracter 'a' na tabela ASCII*/
                                /*Calculates the correct position to insert the word based on the value
                                             of the character 'a' in the ASCII table*/
-
 
     if(node->children[index].word[0] != '\0'){
 
@@ -322,7 +321,7 @@ void FreeMemory(Node *node){
     }
 }
 
-int isEmpty(CompressedTrieTree tree){
+int isEmpty(CompressedTrie tree){
     return(tree.root == NULL);
 }
 

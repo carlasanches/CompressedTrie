@@ -4,8 +4,8 @@
     Author - Carla Sanches
 */
 
-#ifndef COMPRESSEDTRIETREE_H_INCLUDED
-#define COMPRESSEDTRIETREE_H_INCLUDED
+#ifndef COMPRESSEDTRIE_H_INCLUDED
+#define COMPRESSEDTRIE_H_INCLUDED
 
 typedef struct{
     char word[50];
@@ -22,13 +22,13 @@ typedef struct node{
 
 typedef struct{
     Node *root;
-}CompressedTrieTree;
+}CompressedTrie;
 
-void Initialize(CompressedTrieTree *tree);
+void Initialize(CompressedTrie *tree);
 void Insert(Node *node, char *word, int position);
 void FreeMemory(Node *node);
 void PrintWords(Node *node, char *aux_word, int length, int prev_length);
 void PrintTrie(Node *node);
 void Search(Node *node, char *word, char *aux_word, int length, int prev_length, Ocurrence *ocurrences);
 
-#endif // COMPRESSEDTRIETREE_H_INCLUDED
+#endif // COMPRESSEDTRIE_H_INCLUDED
