@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
     pointer_txt = fopen(argv[1],"r");
 
     if(pointer_txt == NULL){
-        printf("Error");
+        printf("Erro - Arquivo nao encontrado");
         return 1;
     }
 
@@ -166,7 +166,7 @@ int main(int argc, char *argv[]){
         pointer_txt_write = fopen("time.csv","a");
 
         if(pointer_txt_write == NULL){
-            printf("Error");
+            printf("Erro - Arquivo nao encontrado");
             return 1;
         }
 
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]){
     pointer_txt_write = fopen("total-time.csv","a");
 
     if(pointer_txt_write == NULL){
-        printf("Error");
+        printf("Erro - Arquivo nao encontrado");
         return 1;
     }
 
