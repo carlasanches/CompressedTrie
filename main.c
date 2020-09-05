@@ -13,6 +13,10 @@
 
 int main(int argc, char *argv[]){
 
+    clock_t total;
+
+    total = clock();
+
     if(argc != 3){
         return 1;
     }
@@ -26,9 +30,8 @@ int main(int argc, char *argv[]){
     char c;
     char word[50];
     char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
-    clock_t time, test;
+    clock_t time;
     double count_time = 0;
-    double count_test = 0;
 
     CompressedTrie tree;
     Initialize(&tree);
@@ -49,7 +52,6 @@ int main(int argc, char *argv[]){
     int position = 0;
     c = tolower(getc(pointer_txt));
 
-    test = clock();
     while(c != EOF){
         int j = 0;
         int i;
@@ -86,12 +88,6 @@ int main(int argc, char *argv[]){
     }
 
     fclose(pointer_txt);
-
-    test = clock() - test;
-
-    count_test = test - count_time;
-
-    printf("tempo 1: %f\n", count_test);
 
     //PrintTrie(tree.root);
 
@@ -167,7 +163,7 @@ int main(int argc, char *argv[]){
         }
 
         FILE *pointer_txt_write;
-        pointer_txt_write = fopen("time.txt","a");
+        pointer_txt_write = fopen("time.csv","a");
 
         if(pointer_txt_write == NULL){
             printf("Error");
@@ -179,11 +175,23 @@ int main(int argc, char *argv[]){
         fclose(pointer_txt_write);
     }
 
-    time = clock();
     FreeMemory(tree.root);
     free(tree.root);
-    time = clock() - time;
-    printf("tempo: %lf", (double) time);
+
+    total = clock() - total;
+
+    FILE *pointer_txt_write;
+
+    pointer_txt_write = fopen("total-time.csv","a");
+
+    if(pointer_txt_write == NULL){
+        printf("Error");
+        return 1;
+    }
+
+    fprintf(pointer_txt_write, "%lf\n", (double) total);
+
+    fclose(pointer_txt_write);
 
     return 0;
 }
